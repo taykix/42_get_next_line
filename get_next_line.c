@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/24 20:15:44 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/24 22:17:25 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,30 @@ char	*get_line(list_t *list)
 	int		line_len;
 	char	*line;
 	char	*str;
+	int i;
 
 	if (list == NULL)
 		return NULL;
 	line_len = count_line(list);
-	line = malloc(line_len);
+	line = malloc(line_len + 1);
 	if (line == NULL)
 		return NULL;
+	i = 0;
 	while (list != NULL)
 	{
 		str = list->str;
-		while (*str)
+		while (*str && i < line_len + 1)
 		{
 			if (*str != '\n')
-				*line++ = *str++;
+				line[i] = *str++;
 			else
 			{
-				*line++ = *str++;
-				*line = '\0';
+				line[i] = *str++;
 				break ;
 			}
+			i++;
 		}
+		line[i] = '\0';
 		list = list->next;
 	}
 	return (line);

@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/24 20:12:57 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/24 23:01:49 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,15 @@ void	clean_line(list_t **head)
 		}
 		else
 		{
-			if (*str)
-			{
-				new_head = create_node(str);
-				if (new_head == NULL || new_head->str == NULL)
-					return ;
-				temp = *head;
-				new_head->next = (*head)->next;
-				*head = new_head;
-				free(temp->str);
-				free(temp);
-				break;
-			}
+			new_head = create_node(str);
+			if (new_head == NULL || new_head->str == NULL)
+				return ;
+			temp = *head;
+			new_head->next = (*head)->next;
+			*head = new_head;
+			free(temp->str);
+			free(temp);
+			break ;
 		}
 	}
 }
