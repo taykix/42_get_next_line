@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:46:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/23 16:18:52 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:47:08 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,15 @@ typedef struct list
 }				list_t;
 
 char			*get_next_line(int fd);
-void			write_to_buffer(list_t *list, int fd);
-void			append(list_t **head, char *str);
-int				has_endline(list_t *list);
+void			write_to_buffer(list_t **list, int fd);
+void			append(list_t **list, list_t *new_node);
+int				has_endline(list_t **list);
 char			*get_line(list_t *list);
 int				count_line(list_t *list);
-void			clean_list(list_t **head);
+void			clean_line(list_t **head);
+list_t			*create_node(char *content);
+void			clean_list(list_t **list);
+char			*ft_strdup(const char *s);
+size_t			ft_strlen(const char *s);
 
 #endif

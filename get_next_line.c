@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/23 16:42:51 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:15:44 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ int	count_line(list_t *list)
 
 char	*get_next_line(int fd)
 {
-	static list_t	*list = NULL;
+	static list_t	*list;
 	char			*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
-	write_to_buffer(list, fd);
+	write_to_buffer(&list, fd);
 	if (list == NULL)
 		return (NULL);
 	next_line = get_line(list);
-	clean_list(&list);
+	clean_line(&list);
 	return (next_line);
 }
 
@@ -95,7 +95,6 @@ int	main(void)
 		if (line == NULL)
 			break ;
 		printf("%s", line);
-		free(line);
 	}
 	return (0);
 }
