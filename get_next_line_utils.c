@@ -6,32 +6,11 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 15:28:08 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:26:35 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	write_to_buffer(t_list **list, int fd)
-{
-	char	buffer[BUFFER_SIZE + 1];
-	t_list	*current;
-	ssize_t	bytes_read;
-
-	while (!has_endline(list))
-	{
-		if (buffer == NULL)
-			return ;
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (!bytes_read)
-		{
-			return ;
-		}
-		buffer[bytes_read] = '\0';
-		current = create_node(buffer);
-		append(list, current);
-	}
-}
 
 int	has_endline(t_list **list)
 {
@@ -75,41 +54,27 @@ void	clean_line(t_list **head)
 	t_list	*new_head;
 	t_list	*temp;
 	char	*str;
-	int		if_eof;
 
-	if_eof = 0;
-	while ((*head) != NULL)
+	while ((*head))
 	{
 		str = (*head)->str;
-		while (*str)
-		{
-			if (*str == '\n')
-			{
-				if_eof = 1;
-				str++;
-				break ;
-			}
+		while (*str && *str != '\n')
 			str++;
-		}
-		if (if_eof != 1)
+		if (*str == '\n')
 		{
-			temp = *head;
-			*head = (*head)->next;
-			free(temp->str);
-			free(temp);
-		}
-		else
-		{
-			new_head = create_node(str);
-			if (new_head == NULL || new_head->str == NULL)
+			new_head = create_node(++str);
+			if (!new_head || !(new_head->str))
 				return ;
-			temp = *head;
 			new_head->next = (*head)->next;
+			free((*head)->str);
+			free(*head);
 			*head = new_head;
-			free(temp->str);
-			free(temp);
 			break ;
 		}
+		temp = *head;
+		*head = (*head)->next;
+		free(temp->str);
+		free(temp);
 	}
 }
 

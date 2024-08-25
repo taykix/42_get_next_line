@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 15:24:29 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:35:40 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,8 @@ char	*get_line(t_list *list)
 	while (list != NULL)
 	{
 		str = list->str;
-		while (*str && i < line_len + 1)
-		{
-			if (*str != '\n')
-				line[i] = *str++;
-			else
-			{
-				line[i] = *str++;
-				break ;
-			}
-			i++;
-		}
+		while (*str && i < line_len + 1 && *str != '\n')
+			line[i++] = *str++;
 		line[i] = '\0';
 		list = list->next;
 	}
@@ -84,6 +75,27 @@ char	*get_next_line(int fd)
 	next_line = get_line(list);
 	clean_line(&list);
 	return (next_line);
+}
+
+void	write_to_buffer(t_list **list, int fd)
+{
+	char	buffer[BUFFER_SIZE + 1];
+	t_list	*current;
+	ssize_t	bytes_read;
+
+	while (!has_endline(list))
+	{
+		if (buffer == NULL)
+			return ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (!bytes_read)
+		{
+			return ;
+		}
+		buffer[bytes_read] = '\0';
+		current = create_node(buffer);
+		append(list, current);
+	}
 }
 
 int	main(void)
