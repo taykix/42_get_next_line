@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:46:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 15:24:31 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:38:23 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,5 @@ void			clean_line(t_list **head);
 t_list			*create_node(char *content);
 void			clean_list(t_list **list);
 char			*ft_strdup(const char *s);
-size_t			ft_strlen(const char *s);
 
 #endif

@@ -6,31 +6,11 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 19:26:35 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:39:36 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int	has_endline(t_list **list)
-{
-	t_list	*current;
-	char	*str;
-
-	current = *list;
-	while (current != NULL)
-	{
-		str = current->str;
-		while (*str)
-		{
-			if (*str == '\n')
-				return (1);
-			str++;
-		}
-		current = current->next;
-	}
-	return (0);
-}
 
 void	append(t_list **list, t_list *new_node)
 {
@@ -118,8 +98,12 @@ char	*ft_strdup(const char *s)
 	size_t	len_s;
 	char	*arr;
 	char	*ptr;
+	size_t	i;
 
-	len_s = ft_strlen(s);
+	i = 0;
+	while (s[i])
+		i++;
+	len_s = i;
 	arr = malloc((len_s + 1) * sizeof(char));
 	if (!arr)
 		return (NULL);
@@ -130,14 +114,4 @@ char	*ft_strdup(const char *s)
 	}
 	*arr = '\0';
 	return (ptr);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
 }

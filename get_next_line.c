@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 19:35:40 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:40:08 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,26 @@ int	count_line(t_list *list)
 	return (line_len);
 }
 
+int	has_endline(t_list **list)
+{
+	t_list	*current;
+	char	*str;
+
+	current = *list;
+	while (current != NULL)
+	{
+		str = current->str;
+		while (*str)
+		{
+			if (*str == '\n')
+				return (1);
+			str++;
+		}
+		current = current->next;
+	}
+	return (0);
+}
+
 char	*get_next_line(int fd)
 {
 	static t_list	*list;
@@ -97,7 +117,7 @@ void	write_to_buffer(t_list **list, int fd)
 		append(list, current);
 	}
 }
-
+/*
 int	main(void)
 {
 	int		fd;
@@ -114,3 +134,4 @@ int	main(void)
 	}
 	return (0);
 }
+*/
