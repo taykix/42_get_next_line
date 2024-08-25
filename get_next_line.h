@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:46:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/24 18:47:08 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 15:24:31 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ typedef struct list
 {
 	char		*str;
 	struct list	*next;
-}				list_t;
+}				t_list;
 
 char			*get_next_line(int fd);
-void			write_to_buffer(list_t **list, int fd);
-void			append(list_t **list, list_t *new_node);
-int				has_endline(list_t **list);
-char			*get_line(list_t *list);
-int				count_line(list_t *list);
-void			clean_line(list_t **head);
-list_t			*create_node(char *content);
-void			clean_list(list_t **list);
+void			write_to_buffer(t_list **list, int fd);
+void			append(t_list **list, t_list *new_node);
+int				has_endline(t_list **list);
+char			*get_line(t_list *list);
+int				count_line(t_list *list);
+void			clean_line(t_list **head);
+t_list			*create_node(char *content);
+void			clean_list(t_list **list);
 char			*ft_strdup(const char *s);
 size_t			ft_strlen(const char *s);
 

@@ -6,25 +6,25 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 14:45:58 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 15:24:29 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_line(list_t *list)
+char	*get_line(t_list *list)
 {
 	int		line_len;
 	char	*line;
 	char	*str;
-	int i;
+	int		i;
 
 	if (list == NULL)
-		return NULL;
+		return (NULL);
 	line_len = count_line(list);
 	line = malloc(line_len + 1);
 	if (line == NULL)
-		return NULL;
+		return (NULL);
 	i = 0;
 	while (list != NULL)
 	{
@@ -46,7 +46,7 @@ char	*get_line(list_t *list)
 	return (line);
 }
 
-int	count_line(list_t *list)
+int	count_line(t_list *list)
 {
 	int		line_len;
 	char	*str;
@@ -73,7 +73,7 @@ int	count_line(list_t *list)
 
 char	*get_next_line(int fd)
 {
-	static list_t	*list;
+	static t_list	*list;
 	char			*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)

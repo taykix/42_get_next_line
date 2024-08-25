@@ -6,16 +6,16 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/24 23:01:49 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 15:24:42 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	write_to_buffer(list_t **list, int fd)
+void	write_to_buffer(t_list **list, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
-	list_t	*current;
+	t_list	*current;
 	ssize_t	bytesRead;
 
 	while (!has_endline(list))
@@ -33,9 +33,9 @@ void	write_to_buffer(list_t **list, int fd)
 	}
 }
 
-int	has_endline(list_t **list)
+int	has_endline(t_list **list)
 {
-	list_t	*current;
+	t_list	*current;
 	char	*str;
 
 	current = *list;
@@ -53,9 +53,9 @@ int	has_endline(list_t **list)
 	return (0);
 }
 
-void	append(list_t **list, list_t *new_node)
+void	append(t_list **list, t_list *new_node)
 {
-	list_t	*temp;
+	t_list	*temp;
 
 	if (!list || !new_node)
 		return ;
@@ -70,10 +70,10 @@ void	append(list_t **list, list_t *new_node)
 	}
 }
 
-void	clean_line(list_t **head)
+void	clean_line(t_list **head)
 {
-	list_t	*new_head;
-	list_t	*temp;
+	t_list	*new_head;
+	t_list	*temp;
 	char	*str;
 	int		if_eof;
 
@@ -113,11 +113,11 @@ void	clean_line(list_t **head)
 	}
 }
 
-list_t	*create_node(char *content)
+t_list	*create_node(char *content)
 {
-	list_t	*node;
+	t_list	*node;
 
-	node = (list_t *)malloc(sizeof(list_t));
+	node = (t_list *)malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
 	node->str = ft_strdup(content);
@@ -130,10 +130,10 @@ list_t	*create_node(char *content)
 	return (node);
 }
 
-void	clean_list(list_t **list)
+void	clean_list(t_list **list)
 {
-	list_t	*temp;
-	list_t	*next;
+	t_list	*temp;
+	t_list	*next;
 
 	if (!list || !*list)
 		return ;
