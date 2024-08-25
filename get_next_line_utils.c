@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 15:24:42 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 15:28:08 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	write_to_buffer(t_list **list, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	t_list	*current;
-	ssize_t	bytesRead;
+	ssize_t	bytes_read;
 
 	while (!has_endline(list))
 	{
 		if (buffer == NULL)
 			return ;
-		bytesRead = read(fd, buffer, BUFFER_SIZE);
-		if (!bytesRead)
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (!bytes_read)
 		{
 			return ;
 		}
-		buffer[bytesRead] = '\0';
+		buffer[bytes_read] = '\0';
 		current = create_node(buffer);
 		append(list, current);
 	}
