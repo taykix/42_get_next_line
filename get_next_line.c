@@ -6,7 +6,7 @@
 /*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/25 19:40:08 by tayki            ###   ########.fr       */
+/*   Updated: 2024/08/25 22:39:03 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,11 @@ void	write_to_buffer(t_list **list, int fd)
 int	main(void)
 {
 	int		fd;
+	int		fda;
 	char	*line;
 
 	fd = open("test.txt", O_RDONLY | O_CREAT);
+	fda = open("test1.txt", O_RDONLY | O_CREAT);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -131,7 +133,14 @@ int	main(void)
 			break ;
 		printf("%s\n", line);
 		free(line);
+		line = get_next_line(fda);
+		if (line == NULL)
+			break ;
+		printf("%s\n", line);
+		free(line);
 	}
+	printf("Buffer size %d\n", BUFFER_SIZE);
+	close(fd);
 	return (0);
 }
 */
