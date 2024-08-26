@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/26 14:47:16 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:34:04 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+#include <string.h>
 
 char	*get_line(t_list *list)
 {
@@ -22,14 +23,14 @@ char	*get_line(t_list *list)
 	if (list == NULL)
 		return (NULL);
 	line_len = count_line(list);
-	line = malloc(line_len + 1);
+	line = malloc(line_len);
 	if (line == NULL)
 		return (NULL);
 	i = 0;
 	while (list != NULL)
 	{
 		str = list->str;
-		while (*str && i < line_len + 1 && *str != '\n')
+		while (*str && i < line_len && *str != '\n')
 			line[i++] = *str++;
 		if (*str == '\n')
 			line[i++] = *str++;
@@ -132,24 +133,19 @@ void	write_to_buffer(t_list **list, int fd)
 	}
 	free(buffer);
 }
-/*
+
 int	main(void)
 {
 	int		fd;
 	int		fda;
 	char	*line;
 
-	fd = open("test2.txt", O_RDONLY | O_CREAT);
-	fda = open("test1.txt", O_RDONLY | O_CREAT);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		printf("%s", line);
-		free(line);
-	}
+	fd = open("42_with_nl", O_RDWR);
+	line = get_next_line(fd);
+	if (strcmp(line, "01234567890123456789012345678901234567890\\n"))
+		printf("line was correct: %s", line);
+	free(line);
 	close(fd);
 	return (0);
 }
-*/
+
