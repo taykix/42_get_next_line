@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/26 15:36:15 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:23:16 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,25 @@ void	append(t_list **list, t_list *new_node)
 
 void	clean_line(t_list **head)
 {
-	t_list	*new_head;
+	int		i;
 	t_list	*temp;
 	char	*str;
 
 	while ((*head))
 	{
 		str = (*head)->str;
-		while (*str && *str != '\n')
-			str++;
-		if (*str == '\n')
+		i = 0;
+		while (str[i] && str[i] != '\n')
+			i++;
+		if (str[i] == '\n' && i < BUFFER_SIZE - 1)
 		{
-			new_head = create_node(++str);
-			if (!new_head || !(new_head->str))
+			temp = create_node(str + i + 1);
+			if (!temp || !(temp->str))
 				return ;
-			new_head->next = (*head)->next;
+			temp->next = (*head)->next;
 			free((*head)->str);
 			free(*head);
-			*head = new_head;
+			*head = temp;
 			break ;
 		}
 		temp = *head;
@@ -97,7 +98,6 @@ char	*ft_strdup(const char *s)
 {
 	size_t	len_s;
 	char	*arr;
-	char	*ptr;
 	size_t	i;
 
 	i = 0;
@@ -107,11 +107,12 @@ char	*ft_strdup(const char *s)
 	arr = malloc((len_s + 1) * sizeof(char));
 	if (!arr)
 		return (NULL);
-	ptr = arr;
-	while (*s)
+	i = 0;
+	while (s[i])
 	{
-		*arr++ = *s++;
+		arr[i] = s[i];
+		i++;
 	}
-	*arr = '\0';
-	return (ptr);
+	arr[i] = '\0';
+	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/26 18:34:04 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/22 20:22:48 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	count_line(t_list *list)
 				line_len++;
 			else
 			{
-				line_len += 2;
+				line_len++;
 				break ;
 			}
 			str++;
@@ -137,15 +137,16 @@ void	write_to_buffer(t_list **list, int fd)
 int	main(void)
 {
 	int		fd;
-	int		fda;
 	char	*line;
 
 	fd = open("42_with_nl", O_RDWR);
 	line = get_next_line(fd);
-	if (strcmp(line, "01234567890123456789012345678901234567890\\n"))
-		printf("line was correct: %s", line);
+	printf("%s", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("%s", line);
 	free(line);
 	close(fd);
+	printf("\nsize of node%lu\n", sizeof(t_list));
 	return (0);
 }
-
