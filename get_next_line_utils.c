@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/22 17:35:48 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:51:45 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	append(t_list **list, t_list *new_node)
 
 void	clean_line(t_list **head)
 {
-	t_list	*new_head;
 	t_list	*temp;
 	char	*str;
 
@@ -40,15 +39,15 @@ void	clean_line(t_list **head)
 		str = (*head)->str;
 		while (*str && *str != '\n')
 			str++;
-		if (*str == '\n')
+		if (*str == '\n' && *++str != '\0')
 		{
-			new_head = create_node(++str);
-			if (!new_head || !(new_head->str))
+			temp = create_node(str);
+			if (!temp || !(temp->str))
 				return ;
-			new_head->next = (*head)->next;
+			temp->next = (*head)->next;
 			free((*head)->str);
 			free(*head);
-			*head = new_head;
+			*head = temp;
 			break ;
 		}
 		temp = *head;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/08/26 14:47:16 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:52:59 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,24 +132,23 @@ void	write_to_buffer(t_list **list, int fd)
 	}
 	free(buffer);
 }
-/*
-int	main(void)
-{
-	int		fd;
-	int		fda;
-	char	*line;
 
-	fd = open("test2.txt", O_RDONLY | O_CREAT);
-	fda = open("test1.txt", O_RDONLY | O_CREAT);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-}
-*/
+// int	main(void)
+// {
+// 	int		fd;
+// 	int		fda;
+// 	char	*line;
+
+// 	fd = open("test.txt", O_RDONLY | O_CREAT);
+// 	fda = open("test1.txt", O_RDONLY | O_CREAT);
+// 	while (1)
+// 	{
+// 		line = get_next_line(fd);
+// 		if (line == NULL)
+// 			break ;
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

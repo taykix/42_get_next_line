@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/22 20:22:48 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:52:50 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_line(t_list *list)
 	if (list == NULL)
 		return (NULL);
 	line_len = count_line(list);
-	line = malloc(line_len);
+	line = malloc(line_len + 1);
 	if (line == NULL)
 		return (NULL);
 	i = 0;
@@ -134,19 +134,19 @@ void	write_to_buffer(t_list **list, int fd)
 	free(buffer);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("42_with_nl", O_RDWR);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	close(fd);
-	printf("\nsize of node%lu\n", sizeof(t_list));
-	return (0);
-}
+// 	fd = open("42_with_nl", O_RDWR);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	close(fd);
+// 	printf("\nsize of node%lu\n", sizeof(t_list));
+// 	return (0);
+// }

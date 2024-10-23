@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/22 20:23:16 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/23 20:37:47 by tayki            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,17 @@ void	append(t_list **list, t_list *new_node)
 
 void	clean_line(t_list **head)
 {
-	int		i;
 	t_list	*temp;
 	char	*str;
 
 	while ((*head))
 	{
 		str = (*head)->str;
-		i = 0;
-		while (str[i] && str[i] != '\n')
-			i++;
-		if (str[i] == '\n' && i < BUFFER_SIZE - 1)
+		while (*str && *str != '\n')
+			str++;
+		if (*str == '\n' && *++str != '\0')
 		{
-			temp = create_node(str + i + 1);
+			temp = create_node(str);
 			if (!temp || !(temp->str))
 				return ;
 			temp->next = (*head)->next;
