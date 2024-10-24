@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/23 20:37:47 by tayki            ###   ########.fr       */
+/*   Updated: 2024/10/24 12:28:51 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	append(t_list **list, t_list *new_node)
 	}
 }
 
-void	clean_line(t_list **head)
+void	clean_line(t_list **head, int fd)
 {
 	t_list	*temp;
 	char	*str;
@@ -37,11 +37,11 @@ void	clean_line(t_list **head)
 	while ((*head))
 	{
 		str = (*head)->str;
-		while (*str && *str != '\n')
+		while (*str && *str != '\n' && (*head)->fd == fd)
 			str++;
-		if (*str == '\n' && *++str != '\0')
+		if (*str == '\n' && *++str != '\0' && (*head)->fd == fd)
 		{
-			temp = create_node(str);
+			temp = create_node(str, fd);
 			if (!temp || !(temp->str))
 				return ;
 			temp->next = (*head)->next;
@@ -52,12 +52,15 @@ void	clean_line(t_list **head)
 		}
 		temp = *head;
 		*head = (*head)->next;
-		free(temp->str);
-		free(temp);
+		if (temp->fd == fd)
+		{
+			free(temp->str);
+			free(temp);
+		}
 	}
 }
 
-t_list	*create_node(char *content)
+t_list	*create_node(char *content, int fd)
 {
 	t_list	*node;
 
@@ -71,6 +74,7 @@ t_list	*create_node(char *content)
 		return (NULL);
 	}
 	node->next = NULL;
+	node->fd = fd;
 	return (node);
 }
 

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tayki <tayki@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/23 20:52:50 by tayki            ###   ########.fr       */
+/*   Updated: 2024/10/24 12:31:42 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 #include <string.h>
 
-char	*get_line(t_list *list)
+char	*get_line(t_list *list, int fd)
 {
 	int		line_len;
 	char	*line;
@@ -22,7 +22,7 @@ char	*get_line(t_list *list)
 
 	if (list == NULL)
 		return (NULL);
-	line_len = count_line(list);
+	line_len = count_line(list, fd);
 	line = malloc(line_len + 1);
 	if (line == NULL)
 		return (NULL);
@@ -30,17 +30,18 @@ char	*get_line(t_list *list)
 	while (list != NULL)
 	{
 		str = list->str;
-		while (*str && i < line_len && *str != '\n')
+		while (*str && i < line_len && *str != '\n' && list->fd == fd)
 			line[i++] = *str++;
-		if (*str == '\n')
+		if (*str == '\n' && list->fd == fd)
 			line[i++] = *str++;
-		line[i] = '\0';
+		if (list->fd == fd)
+			line[i] = '\0';
 		list = list->next;
 	}
 	return (line);
 }
 
-int	count_line(t_list *list)
+int	count_line(t_list *list, int fd)
 {
 	int		line_len;
 	char	*str;
@@ -49,7 +50,7 @@ int	count_line(t_list *list)
 	while (list != NULL)
 	{
 		str = list->str;
-		while (*str)
+		while (*str && fd == list->fd)
 		{
 			if (*str != '\n')
 				line_len++;
@@ -65,7 +66,7 @@ int	count_line(t_list *list)
 	return (line_len);
 }
 
-int	has_endline(t_list **list)
+int	has_endline(t_list **list, int fd)
 {
 	t_list	*current;
 	char	*str;
@@ -74,7 +75,7 @@ int	has_endline(t_list **list)
 	while (current != NULL)
 	{
 		str = current->str;
-		while (*str)
+		while (*str && current->fd == fd)
 		{
 			if (*str == '\n')
 				return (1);
@@ -95,8 +96,8 @@ char	*get_next_line(int fd)
 	write_to_buffer(&list, fd);
 	if (list == NULL)
 		return (NULL);
-	next_line = get_line(list);
-	clean_line(&list);
+	next_line = get_line(list, fd);
+	clean_line(&list, fd);
 	if (next_line == NULL || *next_line == '\0')
 	{
 		free(next_line);
@@ -114,7 +115,7 @@ void	write_to_buffer(t_list **list, int fd)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return ;
-	while (!has_endline(list))
+	while (!has_endline(list, fd))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
@@ -123,7 +124,7 @@ void	write_to_buffer(t_list **list, int fd)
 			return ;
 		}
 		buffer[bytes_read] = '\0';
-		current = create_node(buffer);
+		current = create_node(buffer, fd);
 		if (current == NULL)
 		{
 			free(buffer);
