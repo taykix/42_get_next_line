@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/24 12:31:42 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:55:31 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,17 +137,39 @@ void	write_to_buffer(t_list **list, int fd)
 
 // int	main(void)
 // {
-// 	int		fd;
 // 	char	*line;
 
-// 	fd = open("42_with_nl", O_RDWR);
+// 	int fd, fd1, fd2;
+// 	fd = open("test.txt", O_RDWR);
+// 	fd1 = open("test1.txt", O_RDWR);
+// 	fd2 = open("test2.txt", O_RDWR);
 // 	line = get_next_line(fd);
 // 	printf("%s", line);
 // 	free(line);
+// 	line = get_next_line(fd1);
+// 	printf("%s", line);
+// 	free(line);
 // 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd2);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd1);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd2);
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd1);
 // 	printf("%s", line);
 // 	free(line);
 // 	close(fd);
-// 	printf("\nsize of node%lu\n", sizeof(t_list));
+// 	close(fd1);
+// 	close(fd2);
+// 	printf("\nProgram exited as expected.\n");
 // 	return (0);
 // }

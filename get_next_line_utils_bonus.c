@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/24 12:28:51 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:37:37 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,52 @@ void	append(t_list **list, t_list *new_node)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_node;
+		new_node->prev = temp;
 	}
 }
 
 void	clean_line(t_list **head, int fd)
 {
 	t_list	*temp;
+	t_list	*current;
 	char	*str;
 
-	while ((*head))
+	current = *head;
+	while (current)
 	{
-		str = (*head)->str;
-		while (*str && *str != '\n' && (*head)->fd == fd)
-			str++;
-		if (*str == '\n' && *++str != '\0' && (*head)->fd == fd)
+		str = current->str;
+		if (current->fd == fd)
 		{
-			temp = create_node(str, fd);
-			if (!temp || !(temp->str))
-				return ;
-			temp->next = (*head)->next;
-			free((*head)->str);
-			free(*head);
-			*head = temp;
-			break ;
+			while (*str && *str != '\n')
+				str++;
+			if (*str == '\n' && *++str != '\0')
+			{
+				temp = create_node(str, fd);
+				temp->next = current->next;
+				if (current->prev)
+				{
+					temp->prev = current->prev;
+					current->prev->next = temp;
+				}
+				else
+					*head = temp;
+				free(current->str);
+				free(current);
+				break ;
+			}
+			temp = current->next;
+			if (current->prev)
+				current->prev->next = temp;
+			else
+				*head = temp;
+			if (temp)
+				temp->prev = current->prev;
+			free(current->str);
+			free(current);
+			current = temp;
 		}
-		temp = *head;
-		*head = (*head)->next;
-		if (temp->fd == fd)
-		{
-			free(temp->str);
-			free(temp);
-		}
+		else
+			current = current->next;
 	}
 }
 
@@ -74,6 +89,7 @@ t_list	*create_node(char *content, int fd)
 		return (NULL);
 	}
 	node->next = NULL;
+	node->prev = NULL;
 	node->fd = fd;
 	return (node);
 }
