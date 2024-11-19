@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:46:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/26 23:04:13 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:24:46 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct list
 }				t_list;
 
 char			*get_next_line(int fd);
-void			write_to_buffer(t_list **list, int fd);
+int				write_to_buffer(t_list **list, int fd);
 void			append(t_list **list, t_list *new_node);
 int				has_endline(t_list **list);
 char			*get_the_line(t_list *list);

@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 13:48:15 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/26 23:04:10 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:52:30 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	count_line(t_list *list)
 				line_len++;
 			else
 			{
-				line_len += 2;
+				line_len ++;
 				break ;
 			}
 			str++;
@@ -88,13 +88,14 @@ char	*get_next_line(int fd)
 {
 	static t_list	*list;
 	char			*next_line;
+	int				status;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
 		return (NULL);
-	}
-	write_to_buffer(&list, fd);
-	if (list == NULL)
+	status = write_to_buffer(&list, fd);
+	if (status == -1)
+		return (NULL);
+	if (status == 0 && list == NULL)
 		return (NULL);
 	next_line = get_the_line(list);
 	clean_line(&list);
@@ -106,7 +107,7 @@ char	*get_next_line(int fd)
 	return (next_line);
 }
 
-void	write_to_buffer(t_list **list, int fd)
+int	write_to_buffer(t_list **list, int fd)
 {
 	char	*buffer;
 	ssize_t	bytes_read;
@@ -114,40 +115,42 @@ void	write_to_buffer(t_list **list, int fd)
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return ;
+		return (-1);
 	bytes_read = 1;
 	while (!has_endline(list) && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			break ;
-		buffer[bytes_read] = '\0';
-		current = create_node(buffer);
-		if (!current)
-			break ;
-		append(list, current);
+		if (bytes_read > 0)
+		{
+			buffer[bytes_read] = '\0';
+			current = create_node(buffer);
+			if (!current)
+				bytes_read = -1;
+			else
+				append(list, current);
+		}
 	}
+	free(buffer);
 	if (bytes_read < 0)
 		clean_list(list);
-	free(buffer);
+	return (bytes_read);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	int		fda;
-// 	char	*line;
+int	main(void)
+{
+	int		fd;
+	int		fda;
+	char	*line;
 
-// 	fd = open("test.txt", O_RDONLY | O_CREAT);
-// 	fda = open("test1.txt", O_RDONLY | O_CREAT);
-// 	while (1)
-// 	{
-// 		line = get_next_line(fd);
-// 		if (line == NULL)
-// 			break ;
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("multiple_nl.txt", O_RDONLY | O_CREAT);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
+}

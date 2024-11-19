@@ -6,7 +6,7 @@
 /*   By: tkarakay <tkarakay@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:19:44 by tayki             #+#    #+#             */
-/*   Updated: 2024/10/26 23:05:11 by tkarakay         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:18:22 by tkarakay         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	clean_line(t_list **head)
 		str = (*head)->str;
 		while (*str && *str != '\n')
 			str++;
-		if (*str == '\n' && *++str != '\0')
+		if (*str == '\n' && *(str + 1) != '\0')
 		{
-			temp = create_node(str);
+			temp = create_node(++str);
 			if (!temp || !(temp->str))
 				return ;
 			temp->next = (*head)->next;
